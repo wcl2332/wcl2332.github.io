@@ -10,7 +10,6 @@
 <li>安装node.js</li>
 <li>安装hexo</li>
 <li>更换主题</li>
-<li>修改主题配置</li>
 <li>发布文章</li>
 <li>部署到github</li>
 </ul>
@@ -44,6 +43,35 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">theme: next</span></pre></td></tr></table></figure>
 
 <p>此时，我们的个人博客得主题就变成next 了，更多的配置以及使用方法都在使用文档中以及网上各种美化教程，我们都可以慢慢摸索。这里推荐一两个我看过的教程：<a href="https://blog.csdn.net/nightmare_dimple/article/details/86661502" target="_blank" rel="noopener">Hexo博客优化之Next主题美化</a>、<a href="https://blog.csdn.net/qq_31279347/article/details/82427562" target="_blank" rel="noopener">Hexo Next主题进阶详细教程</a>。后期也会写一些相关的教程。</p>
+<h2 id="5-发布文章"><a href="#5-发布文章" class="headerlink" title="5.发布文章"></a>5.发布文章</h2><p>输入：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo new title 你的文章名字</span></pre></td></tr></table></figure>
+
+<p>此时就会在\myblog\source_posts中新建一个.md文件，打开此文件在里面输入你想要发表的内容（makedown语法）。</p>
+<h2 id="6-部署到GitHub"><a href="#6-部署到GitHub" class="headerlink" title="6.部署到GitHub"></a>6.部署到GitHub</h2><h3 id="创建个人仓库"><a href="#创建个人仓库" class="headerlink" title="创建个人仓库"></a>创建个人仓库</h3><p>GitHub.com中看到一个New repository，新建仓库 </p>
+<p>创建一个和你用户名相同的仓库，<a href="http://xn--yfr16an19l.github.io/" target="_blank" rel="noopener">后面加.github.io</a>，只有这样，将来要部署到GitHub page的时候，才会被识别，<a href="http://xn--xxxx-4m5f354ev5p.github.io/" target="_blank" rel="noopener">也就是xxxx.github.io</a>，其中xxx就是你注册GitHub的用户名 , 点击create repository .</p>
+<p>在你博客个根目录，右键git bash:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git config --global user.name &quot;yourname&quot;&#x2F;&#x2F;GitHub用户名</span></pre></td></tr><tr><td class="code"><pre><span class="line">git config --global user.email &quot;youremail&quot;&#x2F;&#x2F; GitHub的邮箱</span></pre></td></tr></table></figure>
+
+<p>检验输入结果:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git config user.name</span></pre></td></tr><tr><td class="code"><pre><span class="line">git config user.email</span></pre></td></tr></table></figure>
+
+<p> 然后创建SSH ：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;youremail&quot;</span></pre></td></tr></table></figure>
+
+<p> 这个时候它会告诉你已经生成了.ssh的文件夹。在你的电脑中找到这个文件夹。 其中，id_rsa是你这台电脑的私人秘钥，id_rsa.pub是公共秘钥,把这个公钥放在GitHub上，而后在GitHub的setting中，找到SSH keys的设置选项，点击New SSH key,把你的id_rsa.pub里面的信息复制进去。</p>
+<p> 查看是否成功 :</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span></pre></td></tr></table></figure>
+
+<p>这个时候我们就可以部署在github上了，打开 站点配置文件 <code>_config.yml</code> ，找到 deploy ，并修改为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">deploy:</span></pre></td></tr><tr><td class="code"><pre><span class="line">  type: git</span></pre></td></tr><tr><td class="code"><pre><span class="line">  repo: https:&#x2F;&#x2F;github.com&#x2F;YourgithubName&#x2F;YourgithubName.github.io.git</span></pre></td></tr><tr><td class="code"><pre><span class="line">  branch: master</span></pre></td></tr></table></figure>
+
+<p>然后安装 deploy-git ，</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span></pre></td></tr></table></figure>
+
+<p>最后：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo clean</span></pre></td></tr><tr><td class="code"><pre><span class="line">hexo generate</span></pre></td></tr><tr><td class="code"><pre><span class="line">hexo deploy</span></pre></td></tr></table></figure>
+
+<p>这是我们就就可以通过 <a href="http://yourname.github.io" target="_blank" rel="noopener">http://yourname.github.io</a> 来访问你的个人博客了。</p>
 ]]></content>
       <categories>
         <category>hexo</category>
