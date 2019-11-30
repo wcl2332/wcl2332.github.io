@@ -1,45 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search> 
-  
-  
-    
-    <entry>
-      <title>Hello World</title>
-      <link href="/2019/11/30/hello-world/"/>
-      <url>/2019/11/30/hello-world/</url>
-      
-        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><a id="more"></a><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ hexo server</span></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ hexo generate</span></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>HEXO Next 主题 添加在线联系功能</title>
-      <link href="/2019/11/17/page/"/>
-      <url>/2019/11/17/page/</url>
-      
-        <content type="html"><![CDATA[<p>在我们使用hexo 搭建我们个人博客时，我们可以使用DaoVoice 为我们的博客添加在线联系的功能。<br>效果：</p><a id="more"></a><p><img src="https://img-blog.csdnimg.cn/20191117211422673.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3cxMzc2ODM0NTg5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p><h3 id="注册"><a href="#注册" class="headerlink" title="注册"></a>注册</h3><p>首先我们需要进行注册，<a href="http://www.daovoice.io/" target="_blank" rel="noopener">点击前往注册</a>，注册成功之后进入控制台，应用设置&gt;安装到网站,获取我们所需要的app_id：<br><img src="https://img-blog.csdnimg.cn/20191117205343685.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3cxMzc2ODM0NTg5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p><h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>接下我们需要在主题中进行一些配置，这边使用的是next主题，就以next主题为例：<br>打开文件\themes\next\layout_partials\head\head.swig,任意位置插入以下代码：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">&#123;% <span class="keyword">if</span> theme.daovoice %&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">  &lt;script&gt;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">  (<span class="function"><span class="keyword">function</span>(<span class="params">i,s,o,g,r,a,m</span>)</span>&#123;i[<span class="string">"DaoVoiceObject"</span>]=r;i[r]=i[r]||<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;(i[r].q=i[r].q||[]).push(<span class="built_in">arguments</span>)&#125;,i[r].l=<span class="number">1</span>*<span class="keyword">new</span> <span class="built_in">Date</span>();a=s.createElement(o),m=s.getElementsByTagName(o)[<span class="number">0</span>];a.async=<span class="number">1</span>;a.src=g;a.charset=<span class="string">"utf-8"</span>;m.parentNode.insertBefore(a,m)&#125;)(<span class="built_in">window</span>,<span class="built_in">document</span>,<span class="string">"script"</span>,(<span class="string">'https:'</span> == <span class="built_in">document</span>.location.protocol ? <span class="string">'https:'</span> : <span class="string">'http:'</span>) + <span class="string">"//widget.daovoice.io/widget/你的app_id.js"</span>,<span class="string">"daovoice"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">  daovoice(<span class="string">'init'</span>, &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">      app_id: <span class="string">"&#123;&#123;theme.daovoice_app_id&#125;&#125;"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    &#125;);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">  daovoice(<span class="string">'update'</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">  &lt;<span class="regexp">/script&gt;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="regexp">&#123;% endif %&#125;</span></span></pre></td></tr></table></figure><p>在主题配置文件中插入以下代码：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"># Online contact </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">daovoice: <span class="literal">true</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">daovoice_app_id: 这里输入前面获取的app_id</span></pre></td></tr></table></figure><p>以上就是我们需要配置的内容，配置完成之后，我们进行hexo clean,hexo s 即可查看效果。不过此时我们会发现，DaoVoice 的图标会与我们博客上的按钮重合，影响使用，这时候我们可以在“聊天设置”中进行设置：<br><img src="https://img-blog.csdnimg.cn/20191117210753372.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3cxMzc2ODM0NTg5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20191117210811553.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3cxMzc2ODM0NTg5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>我们通过hexo s 一边修改一遍测试直到我们满意的效果。</p>]]></content>
-      
-      
+<search>
+  <entry>
+    <title>Hello World</title>
+    <url>/2019/11/30/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<a id="more"></a>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>HEXO Next 主题 添加在线联系功能</title>
+    <url>/2019/11/17/page/</url>
+    <content><![CDATA[<p>在我们使用hexo 搭建我们个人博客时，我们可以使用DaoVoice 为我们的博客添加在线联系的功能。<br>效果：</p>
+<a id="more"></a>
+<p><img src="https://img-blog.csdnimg.cn/20191117211422673.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3cxMzc2ODM0NTg5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h3 id="注册"><a href="#注册" class="headerlink" title="注册"></a>注册</h3><p>首先我们需要进行注册，<a href="http://www.daovoice.io/" target="_blank" rel="noopener">点击前往注册</a>，注册成功之后进入控制台，应用设置&gt;安装到网站,获取我们所需要的app_id：<br><img src="https://img-blog.csdnimg.cn/20191117205343685.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3cxMzc2ODM0NTg5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>接下我们需要在主题中进行一些配置，这边使用的是next主题，就以next主题为例：<br>打开文件\themes\next\layout_partials\head\head.swig,任意位置插入以下代码：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&#123;% <span class="keyword">if</span> theme.daovoice %&#125;</span></pre></td></tr><tr><td class="code"><pre><span class="line">  &lt;script&gt;</span></pre></td></tr><tr><td class="code"><pre><span class="line">  (<span class="function"><span class="keyword">function</span>(<span class="params">i,s,o,g,r,a,m</span>)</span>&#123;i[<span class="string">"DaoVoiceObject"</span>]=r;i[r]=i[r]||<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;(i[r].q=i[r].q||[]).push(<span class="built_in">arguments</span>)&#125;,i[r].l=<span class="number">1</span>*<span class="keyword">new</span> <span class="built_in">Date</span>();a=s.createElement(o),m=s.getElementsByTagName(o)[<span class="number">0</span>];a.async=<span class="number">1</span>;a.src=g;a.charset=<span class="string">"utf-8"</span>;m.parentNode.insertBefore(a,m)&#125;)(<span class="built_in">window</span>,<span class="built_in">document</span>,<span class="string">"script"</span>,(<span class="string">'https:'</span> == <span class="built_in">document</span>.location.protocol ? <span class="string">'https:'</span> : <span class="string">'http:'</span>) + <span class="string">"//widget.daovoice.io/widget/你的app_id.js"</span>,<span class="string">"daovoice"</span>)</span></pre></td></tr><tr><td class="code"><pre><span class="line">  daovoice(<span class="string">'init'</span>, &#123;</span></pre></td></tr><tr><td class="code"><pre><span class="line">      app_id: <span class="string">"&#123;&#123;theme.daovoice_app_id&#125;&#125;"</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">    &#125;);</span></pre></td></tr><tr><td class="code"><pre><span class="line">  daovoice(<span class="string">'update'</span>);</span></pre></td></tr><tr><td class="code"><pre><span class="line">  &lt;<span class="regexp">/script&gt;</span></span></pre></td></tr><tr><td class="code"><pre><span class="line"><span class="regexp">&#123;% endif %&#125;</span></span></pre></td></tr></table></figure>
+<p>在主题配置文件中插入以下代码：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"># Online contact </span></pre></td></tr><tr><td class="code"><pre><span class="line">daovoice: <span class="literal">true</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">daovoice_app_id: 这里输入前面获取的app_id</span></pre></td></tr></table></figure>
+<p>以上就是我们需要配置的内容，配置完成之后，我们进行hexo clean,hexo s 即可查看效果。不过此时我们会发现，DaoVoice 的图标会与我们博客上的按钮重合，影响使用，这时候我们可以在“聊天设置”中进行设置：<br><img src="https://img-blog.csdnimg.cn/20191117210753372.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3cxMzc2ODM0NTg5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20191117210811553.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3cxMzc2ODM0NTg5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>我们通过hexo s 一边修改一遍测试直到我们满意的效果。</p>
+]]></content>
       <categories>
-          
-          <category> hexo </category>
-          
+        <category>hexo</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> hexo </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-  
-  
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
 </search>
