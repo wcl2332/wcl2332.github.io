@@ -8,7 +8,7 @@
 <h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ul>
 <li>安装Git</li>
 <li>安装node.js</li>
-<li>安装hexo</li>
+<li>安装hexo<a id="more"></a></li>
 <li>更换主题</li>
 <li>发布文章</li>
 <li>部署到github</li>
