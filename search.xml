@@ -1,6 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>spring boot 学习笔记</title>
+    <url>/2020/03/09/springboot/</url>
+    <content><![CDATA[<h2 id="一、spring-boot-入门"><a href="#一、spring-boot-入门" class="headerlink" title="一、spring boot 入门"></a>一、spring boot 入门</h2><h2 id="二、配置文件"><a href="#二、配置文件" class="headerlink" title="二、配置文件"></a>二、配置文件</h2><h3 id="1-配置文件"><a href="#1-配置文件" class="headerlink" title="1.配置文件"></a>1.配置文件</h3><p>配置文件的作用：修改spring boot 自动配置默认值；</p>
+<p> yml是YAML(YAML Ain’t Makeup Language) 语言文件，以数据为中心 <a id="more"></a></p>
+<h3 id="2-YAML-语法"><a href="#2-YAML-语法" class="headerlink" title="2.YAML 语法"></a>2.YAML 语法</h3><p>K:(空格)v :表示一对键值对 （空格必须要有）；</p>
+<p>以空格的缩进来控制层级关系，只要是左对齐的一列数据，都是一个层级的</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">server:</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="attr">port:</span> <span class="number">8080</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="attr">path:</span> <span class="string">/wcl</span></span></pre></td></tr></table></figure>
+
+<p>属性和值是大小写敏感的。</p>
+<h4 id="1、值的写法"><a href="#1、值的写法" class="headerlink" title="1、值的写法"></a>1、值的写法</h4><h5 id="字面量：普通的值（数字、布尔、字符串）"><a href="#字面量：普通的值（数字、布尔、字符串）" class="headerlink" title="字面量：普通的值（数字、布尔、字符串）:"></a>字面量：普通的值（数字、布尔、字符串）:</h5><p>k: v 字面量直接来写；</p>
+<p>​        字符串默认不加上单引号和双引号；</p>
+<p>​        “” : 双引号，不会转义字符串里面的特殊字符；特殊字符会作为本身想表示的意思    </p>
+<p>​                            name: ‘’zhangsan \n list”  输出：zhangsan 换行  list</p>
+<p>​        ‘ ‘: 单引号，会转义特殊字符，特殊字符最终只是一个普通的字符串数据</p>
+<p>​                            name: ‘zhangsan \n list’ 输出：zhansan \n lsit</p>
+<h5 id="对象、Map-属性值-（键值对）"><a href="#对象、Map-属性值-（键值对）" class="headerlink" title="对象、Map(属性值)（键值对）:"></a>对象、Map(属性值)（键值对）:</h5><p>k: v :在下一行来写对象的属性和值关系；注意缩进</p>
+<p>​        对象还是k: v 的方式</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">friends:</span> </span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="attr">lastName:</span> <span class="string">zhang</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="attr">age:</span> <span class="number">20</span></span></pre></td></tr></table></figure>
+
+<p>​        行内写法：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">friends:</span> <span class="string">&#123;lastName:</span> <span class="string">zhang,age:</span> <span class="number">20</span><span class="string">&#125;</span></span></pre></td></tr></table></figure>
+
+<h5 id="数组（List、Set）"><a href="#数组（List、Set）" class="headerlink" title="数组（List、Set）"></a>数组（List、Set）</h5><pre><code>用-表示数组中的一个元素</code></pre><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">pets:</span> </span></pre></td></tr><tr><td class="code"><pre><span class="line">  <span class="string">-cat</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">  <span class="string">-dog</span></span></pre></td></tr></table></figure>
+
+<p>​        行内写法</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">pets:</span> <span class="string">[cat,dog]</span></span></pre></td></tr></table></figure>
+
+<p>未完待续。。。。。。</p>
+]]></content>
+      <categories>
+        <category>Spring Boot</category>
+      </categories>
+      <tags>
+        <tag>Spring Boot</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>解决小程序 app.js中的onLaunch中的数据 在page的onLoade中接收不到的问题</title>
     <url>/2020/03/09/xiaochegnxu/</url>
     <content><![CDATA[<h3 id="一、问题阐述"><a href="#一、问题阐述" class="headerlink" title="一、问题阐述"></a>一、问题阐述</h3><p>​      由于工作的安排，最近在改我们公司的一个小程序，在此期间碰到了一个坑，遇到的问题是，实现登录时，app.js中 onLaunch 实现数据请求拿到后端返回的参数后写入 Storage ，然后在首页 Storage 取信息，但是并未能取到这个参数。调试后发现  app.js onLaunch并没有先于onLoad 执行完再执行，而是onLoad先执行完 ，所以进入首页未能取到相关参数。<a id="more"></a>跟踪了一下问题发现，app.js onLaunch  中登录的请求时异步的，这就可能导致请求的参数在page onLoade 执行完后才会返回。</p>
