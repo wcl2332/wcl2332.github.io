@@ -48,18 +48,18 @@
   };
 </script>
 
-  <meta name="description" content="一、Spring Boot 入门二、配置文件1.配置文件配置文件的作用：修改spring boot 自动配置默认值；  yml是YAML(YAML Ain’t Makeup Language) 语言文件，以数据为中心">
-<meta name="keywords" content="Spring Boot">
+  <meta name="description" content="一、File类的使用1.如何创建File对象 File类的一个对象，代表一个文件或文件目录；  public File(String pathname) 以pathname为路径创建File对象，可以是绝对路径或者相对路径，如果pathname是相对路径，则默认的当前路径在系统属性user.dir中存储  绝对路径：是一个固定的路径，从盘符开始 相对路径：是相对于某个位置开始  1File fil">
+<meta name="keywords" content="java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Spring Boot 学习笔记">
-<meta property="og:url" content="http:&#x2F;&#x2F;dragonlucky.cn&#x2F;2020&#x2F;03&#x2F;09&#x2F;springboot&#x2F;index.html">
+<meta property="og:title" content="Java基础 IO流">
+<meta property="og:url" content="http:&#x2F;&#x2F;dragonlucky.cn&#x2F;2020&#x2F;08&#x2F;15&#x2F;IO&#x2F;index.html">
 <meta property="og:site_name" content="王成龙de个人博客">
-<meta property="og:description" content="一、Spring Boot 入门二、配置文件1.配置文件配置文件的作用：修改spring boot 自动配置默认值；  yml是YAML(YAML Ain’t Makeup Language) 语言文件，以数据为中心">
+<meta property="og:description" content="一、File类的使用1.如何创建File对象 File类的一个对象，代表一个文件或文件目录；  public File(String pathname) 以pathname为路径创建File对象，可以是绝对路径或者相对路径，如果pathname是相对路径，则默认的当前路径在系统属性user.dir中存储  绝对路径：是一个固定的路径，从盘符开始 相对路径：是相对于某个位置开始  1File fil">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-24T16:04:01.359Z">
+<meta property="og:updated_time" content="2020-08-15T08:55:18.288Z">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://dragonlucky.cn/2020/03/09/springboot/">
+<link rel="canonical" href="http://dragonlucky.cn/2020/08/15/IO/">
 
 
 <script id="page-configurations">
@@ -73,7 +73,7 @@
   };
 </script>
 
-  <title>Spring Boot 学习笔记 | 王成龙de个人博客</title>
+  <title>Java基础 IO流 | 王成龙de个人博客</title>
   
 
 
@@ -218,7 +218,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://dragonlucky.cn/2020/03/09/springboot/">
+    <link itemprop="mainEntityOfPage" href="http://dragonlucky.cn/2020/08/15/IO/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -231,7 +231,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Spring Boot 学习笔记
+          Java基础 IO流
         </h1>
 
         <div class="post-meta">
@@ -240,24 +240,18 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2020-03-09 15:39:21" itemprop="dateCreated datePublished" datetime="2020-03-09T15:39:21+08:00">2020-03-09</time>
+              <time title="创建时间：2020-08-15 16:52:55 / 修改时间：16:55:18" itemprop="dateCreated datePublished" datetime="2020-08-15T16:52:55+08:00">2020-08-15</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-25 00:04:01" itemprop="dateModified" datetime="2020-03-25T00:04:01+08:00">2020-03-25</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Spring-Boot/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring Boot</span>
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
                   </a>
                 </span>
             </span>
@@ -268,7 +262,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>608</span>
+              <span>1.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -287,32 +281,72 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="一、Spring-Boot-入门"><a href="#一、Spring-Boot-入门" class="headerlink" title="一、Spring Boot 入门"></a>一、Spring Boot 入门</h2><h2 id="二、配置文件"><a href="#二、配置文件" class="headerlink" title="二、配置文件"></a>二、配置文件</h2><h3 id="1-配置文件"><a href="#1-配置文件" class="headerlink" title="1.配置文件"></a>1.配置文件</h3><p>配置文件的作用：修改spring boot 自动配置默认值；</p>
-<p> yml是YAML(YAML Ain’t Makeup Language) 语言文件，以数据为中心 <a id="more"></a></p>
-<h3 id="2-YAML-语法"><a href="#2-YAML-语法" class="headerlink" title="2.YAML 语法"></a>2.YAML 语法</h3><p>K:(空格)v :表示一对键值对 （空格必须要有）；</p>
-<p>以空格的缩进来控制层级关系，只要是左对齐的一列数据，都是一个层级的</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="attr">port:</span> <span class="number">8080</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="attr">path:</span> <span class="string">/wcl</span></span></pre></td></tr></table></figure>
+        <h2 id="一、File类的使用"><a href="#一、File类的使用" class="headerlink" title="一、File类的使用"></a>一、File类的使用</h2><h3 id="1-如何创建File对象"><a href="#1-如何创建File对象" class="headerlink" title="1.如何创建File对象"></a>1.如何创建File对象</h3><ol>
+<li><p>File类的一个对象，代表一个文件或文件目录；</p>
+</li>
+<li><p><strong>public File(String pathname)</strong></p>
+<p>以pathname为路径创建File对象，可以是绝对路径或者相对路径，如果pathname是相对路径，则默认的当前路径在系统属性user.dir中存储</p>
+<ul>
+<li><strong>绝对路径</strong>：是一个固定的路径，从盘符开始</li>
+<li><strong>相对路径</strong>：是相对于某个位置开始</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">File file=<span class="keyword">new</span> File(<span class="string">"hello.text1"</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">File file1=<span class="keyword">new</span> File(<span class="string">"C:\\user\\123.text"</span>)</span></pre></td></tr></table></figure>
+</li>
+<li><p><strong>public File(String parent,String child)</strong></p>
+<p>以parent为父路径，child为子路径创建File对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">File file2=<span class="keyword">new</span> File(<span class="string">"D:\\USER"</span>,<span class="string">"234.text"</span>)</span></pre></td></tr></table></figure>
+</li>
+<li><p><strong>public File(File parent,String child)</strong></p>
+<p>根据一个父File对象和子文件路径创建File对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">File file3=<span class="keyword">new</span> File(file2,<span class="string">"345.text"</span>);</span></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="2-File类常用功能"><a href="#2-File类常用功能" class="headerlink" title="2.File类常用功能"></a>2.File类常用功能</h3></li>
+</ol>
+<h4 id="2-1-File类的获取功能"><a href="#2-1-File类的获取功能" class="headerlink" title="2.1 File类的获取功能"></a>2.1 File类的获取功能</h4><ul>
+<li><p><strong>public String getAbsolutePath();</strong>  获取绝对路径</p>
+</li>
+<li><p><strong>public String getPath();</strong>  获取路径</p>
+</li>
+<li><p><strong>public String getName();</strong>  获取名称</p>
+</li>
+<li><p><strong>public String getParent();</strong>  获取上层文件目录。若无，返回null</p>
+</li>
+<li><p><strong>public long length();</strong>  获取文件长度（即：字节数）。不能获取目录长度</p>
+</li>
+<li><p><strong>public long lastModified();</strong>  获取左后一次的修改时间，毫秒值</p>
+</li>
+<li><p><strong>public String[ ] list();</strong>  获取指定目录下的所有文件或者文件目录的名称数组</p>
+</li>
+<li><p><strong>public File[ ] listFiles();</strong>  获取指定目录下的所有1文件或者文件目录的File 数组</p>
+</li>
+<li><p><strong>public boolean renameTo(File dest);</strong> 把文件重命名为指定的文件路径</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    File file1=<span class="keyword">new</span> File(<span class="string">"D:\\code\\123.text"</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    File file2=<span class="keyword">new</span> File(<span class="string">"C:\\work\\234.text1"</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">boolean</span> f=file1.renameTo(file2);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    System.out.println(f);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">//要想保证返回true,需要file1在硬盘中存在的，且file2不能再硬盘中存在</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
 
-<p>属性和值是大小写敏感的。</p>
-<h4 id="1、值的写法"><a href="#1、值的写法" class="headerlink" title="1、值的写法"></a>1、值的写法</h4><h5 id="字面量：普通的值（数字、布尔、字符串）"><a href="#字面量：普通的值（数字、布尔、字符串）" class="headerlink" title="字面量：普通的值（数字、布尔、字符串）:"></a>字面量：普通的值（数字、布尔、字符串）:</h5><p>k: v 字面量直接来写；</p>
-<p>​        字符串默认不加上单引号和双引号；</p>
-<p>​        “” : 双引号，不会转义字符串里面的特殊字符；特殊字符会作为本身想表示的意思    </p>
-<p>​                            name: ‘’zhangsan \n list”  输出：zhangsan 换行  list</p>
-<p>​        ‘ ‘: 单引号，会转义特殊字符，特殊字符最终只是一个普通的字符串数据</p>
-<p>​                            name: ‘zhangsan \n list’ 输出：zhansan \n lsit</p>
-<h5 id="对象、Map-属性值-（键值对）"><a href="#对象、Map-属性值-（键值对）" class="headerlink" title="对象、Map(属性值)（键值对）:"></a>对象、Map(属性值)（键值对）:</h5><p>k: v :在下一行来写对象的属性和值关系；注意缩进</p>
-<p>​        对象还是k: v 的方式</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="attr">friends:</span> </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="attr">lastName:</span> <span class="string">zhang</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="attr">age:</span> <span class="number">20</span></span></pre></td></tr></table></figure>
-
-<p>​        行内写法：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="attr">friends:</span> <span class="string">&#123;lastName:</span> <span class="string">zhang,age:</span> <span class="number">20</span><span class="string">&#125;</span></span></pre></td></tr></table></figure>
-
-<h5 id="数组（List、Set）"><a href="#数组（List、Set）" class="headerlink" title="数组（List、Set）"></a>数组（List、Set）</h5><pre><code>用-表示数组中的一个元素</code></pre><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="attr">pets:</span> </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">  <span class="string">-cat</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">  <span class="string">-dog</span></span></pre></td></tr></table></figure>
-
-<p>​        行内写法</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="attr">pets:</span> <span class="string">[cat,dog]</span></span></pre></td></tr></table></figure>
-
-<p>未完待续。。。。。。</p>
+</li>
+</ul>
+<h4 id="2-2-File类的判断功能"><a href="#2-2-File类的判断功能" class="headerlink" title="2.2 File类的判断功能"></a>2.2 File类的判断功能</h4><ul>
+<li><strong>public boolean isDirectory();</strong>  判断是否是文件目录</li>
+<li><strong>public boolean isFile();</strong>  判断是否是文件</li>
+<li><strong>public boolean exists();</strong>  判断是否存在</li>
+<li><strong>public boolean canRead();</strong>  判断是否可度</li>
+<li><strong>public boolean canWrite();</strong>  判断是否可写</li>
+<li><strong>public boolean isHidden();</strong>  判断是否隐藏</li>
+</ul>
+<h4 id="2-3File-类的创建功能"><a href="#2-3File-类的创建功能" class="headerlink" title="2.3File 类的创建功能"></a>2.3File 类的创建功能</h4><ul>
+<li><p><strong>public boolean createNewFile();</strong> 创建文件。若文件存在，则不创建，返回false</p>
+</li>
+<li><p><strong>public boolean mkdir();</strong>  创建文件目录。如果此文件目录存在，就不创建了。如果此文件目录的上层文件目录不存，也不创建</p>
+</li>
+<li><p><strong>public boolean mkdirs();</strong>  创建文件目录。如果上层文件目录不存在，一并创建</p>
+<p>注意事项：如果你创建文件或者文件目录没有写盘符路径，那么，默认在项目路径下</p>
+</li>
+</ul>
+<h4 id="2-4File类的删除功能"><a href="#2-4File类的删除功能" class="headerlink" title="2.4File类的删除功能"></a>2.4File类的删除功能</h4><ul>
+<li><p><strong>public boolean delete();</strong> 删除文件或者文件夹</p>
+<p>删除注意事项：</p>
+<p>java中的删除不走回收站，要删除一个文件目录，请注意该文件目录内不能包含文件或者文件目录</p>
+</li>
+</ul>
 
     </div>
 
@@ -348,7 +382,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="/http:/dragonlucky.cn/2020/03/09/springboot/" title="Spring Boot 学习笔记">http://dragonlucky.cn/2020/03/09/springboot/</a>
+    <a href="/http:/dragonlucky.cn/2020/08/15/IO/" title="Java基础 IO流">http://dragonlucky.cn/2020/08/15/IO/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -360,7 +394,7 @@
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/Spring-Boot/" rel="tag"><i class="fa fa-tag"></i> Spring Boot</a>
+              <a href="/tags/java/" rel="tag"><i class="fa fa-tag"></i> java</a>
           </div>
 
         
@@ -369,13 +403,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/03/09/xiaochegnxu/" rel="prev" title="解决小程序 app.js中的onLaunch中的数据 在page的onLoade中接收不到的问题">
-      <i class="fa fa-chevron-left"></i> 解决小程序 app.js中的onLaunch中的数据 在page的onLoade中接收不到的问题
+    <a href="/2020/08/04/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/" rel="prev" title="Java基础 集合框架">
+      <i class="fa fa-chevron-left"></i> Java基础 集合框架
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/03/18/2020%E5%B9%B43%E6%9C%8818%E6%97%A5/" rel="next" title="使用百度智能云实现文字、身份证识别等">
-      使用百度智能云实现文字、身份证识别等 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -418,7 +449,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、Spring-Boot-入门"><span class="nav-number">1.</span> <span class="nav-text">一、Spring Boot 入门</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、配置文件"><span class="nav-number">2.</span> <span class="nav-text">二、配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-配置文件"><span class="nav-number">2.1.</span> <span class="nav-text">1.配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-YAML-语法"><span class="nav-number">2.2.</span> <span class="nav-text">2.YAML 语法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、值的写法"><span class="nav-number">2.2.1.</span> <span class="nav-text">1、值的写法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#字面量：普通的值（数字、布尔、字符串）"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">字面量：普通的值（数字、布尔、字符串）:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#对象、Map-属性值-（键值对）"><span class="nav-number">2.2.1.2.</span> <span class="nav-text">对象、Map(属性值)（键值对）:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#数组（List、Set）"><span class="nav-number">2.2.1.3.</span> <span class="nav-text">数组（List、Set）</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、File类的使用"><span class="nav-number">1.</span> <span class="nav-text">一、File类的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-如何创建File对象"><span class="nav-number">1.1.</span> <span class="nav-text">1.如何创建File对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-File类常用功能"><span class="nav-number">1.2.</span> <span class="nav-text">2.File类常用功能</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-File类的获取功能"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 File类的获取功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-File类的判断功能"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 File类的判断功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3File-类的创建功能"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3File 类的创建功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4File类的删除功能"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4File类的删除功能</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

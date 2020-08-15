@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Java基础 IO流</title>
+      <link href="/2020/08/15/IO/"/>
+      <url>/2020/08/15/IO/</url>
+      
+        <content type="html"><![CDATA[<h2 id="一、File类的使用"><a href="#一、File类的使用" class="headerlink" title="一、File类的使用"></a>一、File类的使用</h2><h3 id="1-如何创建File对象"><a href="#1-如何创建File对象" class="headerlink" title="1.如何创建File对象"></a>1.如何创建File对象</h3><ol><li><p>File类的一个对象，代表一个文件或文件目录；</p></li><li><p><strong>public File(String pathname)</strong></p><p>以pathname为路径创建File对象，可以是绝对路径或者相对路径，如果pathname是相对路径，则默认的当前路径在系统属性user.dir中存储</p><ul><li><strong>绝对路径</strong>：是一个固定的路径，从盘符开始</li><li><strong>相对路径</strong>：是相对于某个位置开始</li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">File file=<span class="keyword">new</span> File(<span class="string">"hello.text1"</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">File file1=<span class="keyword">new</span> File(<span class="string">"C:\\user\\123.text"</span>)</span></pre></td></tr></table></figure></li><li><p><strong>public File(String parent,String child)</strong></p><p>以parent为父路径，child为子路径创建File对象</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">File file2=<span class="keyword">new</span> File(<span class="string">"D:\\USER"</span>,<span class="string">"234.text"</span>)</span></pre></td></tr></table></figure></li><li><p><strong>public File(File parent,String child)</strong></p><p>根据一个父File对象和子文件路径创建File对象</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">File file3=<span class="keyword">new</span> File(file2,<span class="string">"345.text"</span>);</span></pre></td></tr></table></figure><a id="more"></a><h3 id="2-File类常用功能"><a href="#2-File类常用功能" class="headerlink" title="2.File类常用功能"></a>2.File类常用功能</h3></li></ol><h4 id="2-1-File类的获取功能"><a href="#2-1-File类的获取功能" class="headerlink" title="2.1 File类的获取功能"></a>2.1 File类的获取功能</h4><ul><li><p><strong>public String getAbsolutePath();</strong>  获取绝对路径</p></li><li><p><strong>public String getPath();</strong>  获取路径</p></li><li><p><strong>public String getName();</strong>  获取名称</p></li><li><p><strong>public String getParent();</strong>  获取上层文件目录。若无，返回null</p></li><li><p><strong>public long length();</strong>  获取文件长度（即：字节数）。不能获取目录长度</p></li><li><p><strong>public long lastModified();</strong>  获取左后一次的修改时间，毫秒值</p></li><li><p><strong>public String[ ] list();</strong>  获取指定目录下的所有文件或者文件目录的名称数组</p></li><li><p><strong>public File[ ] listFiles();</strong>  获取指定目录下的所有1文件或者文件目录的File 数组</p></li><li><p><strong>public boolean renameTo(File dest);</strong> 把文件重命名为指定的文件路径</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    File file1=<span class="keyword">new</span> File(<span class="string">"D:\\code\\123.text"</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    File file2=<span class="keyword">new</span> File(<span class="string">"C:\\work\\234.text1"</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">boolean</span> f=file1.renameTo(file2);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    System.out.println(f);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">//要想保证返回true,需要file1在硬盘中存在的，且file2不能再硬盘中存在</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure></li></ul><h4 id="2-2-File类的判断功能"><a href="#2-2-File类的判断功能" class="headerlink" title="2.2 File类的判断功能"></a>2.2 File类的判断功能</h4><ul><li><strong>public boolean isDirectory();</strong>  判断是否是文件目录</li><li><strong>public boolean isFile();</strong>  判断是否是文件</li><li><strong>public boolean exists();</strong>  判断是否存在</li><li><strong>public boolean canRead();</strong>  判断是否可度</li><li><strong>public boolean canWrite();</strong>  判断是否可写</li><li><strong>public boolean isHidden();</strong>  判断是否隐藏</li></ul><h4 id="2-3File-类的创建功能"><a href="#2-3File-类的创建功能" class="headerlink" title="2.3File 类的创建功能"></a>2.3File 类的创建功能</h4><ul><li><p><strong>public boolean createNewFile();</strong> 创建文件。若文件存在，则不创建，返回false</p></li><li><p><strong>public boolean mkdir();</strong>  创建文件目录。如果此文件目录存在，就不创建了。如果此文件目录的上层文件目录不存，也不创建</p></li><li><p><strong>public boolean mkdirs();</strong>  创建文件目录。如果上层文件目录不存在，一并创建</p><p>注意事项：如果你创建文件或者文件目录没有写盘符路径，那么，默认在项目路径下</p></li></ul><h4 id="2-4File类的删除功能"><a href="#2-4File类的删除功能" class="headerlink" title="2.4File类的删除功能"></a>2.4File类的删除功能</h4><ul><li><p><strong>public boolean delete();</strong> 删除文件或者文件夹</p><p>删除注意事项：</p><p>java中的删除不走回收站，要删除一个文件目录，请注意该文件目录内不能包含文件或者文件目录</p></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Java基础 集合框架</title>
       <link href="/2020/08/04/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/"/>
       <url>/2020/08/04/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/</url>
