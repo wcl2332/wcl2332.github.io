@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>java selenium 实现操作已打开浏览器</title>
+    <url>/2021/03/05/%E5%AE%9E%E7%8E%B0%E6%93%8D%E4%BD%9C%E5%B7%B2%E6%89%93%E5%BC%80%E6%B5%8F%E8%A7%88%E5%99%A8/</url>
+    <content><![CDATA[<p>最近在做 selenium 爬虫相关的工作，起初使用selenium 时，每次运行时都会打开一个新的Chorme 浏览器，这就导致我们在之后的操作会丢失数据，还得继续从头再执行。对于这一问题，我们可以利用Chrome DevTools协议（此处针对的是Chorme浏览器），它允许客户检查和调试Chrome浏览器。</p>
+<h4 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h4><p>1.找到我们Chorme 安装路径</p>
+<a id="more"></a>
+
+<p><img src="/2021/03/05/%E5%AE%9E%E7%8E%B0%E6%93%8D%E4%BD%9C%E5%B7%B2%E6%89%93%E5%BC%80%E6%B5%8F%E8%A7%88%E5%99%A8/Image%5Cimage-20210305141211981.png" alt="image-20210305141211981"></p>
+<p><img src="/2021/03/05/%E5%AE%9E%E7%8E%B0%E6%93%8D%E4%BD%9C%E5%B7%B2%E6%89%93%E5%BC%80%E6%B5%8F%E8%A7%88%E5%99%A8/Image%5Cimage-20210305141411615.png" alt="image-20210305141411615"></p>
+<p>2.在cmd 中输入   chrome.exe –remote-debugging-port=9222   （potr 可以自由指定） ，就会自动弹出一个浏览器</p>
+<p><img src="/2021/03/05/%E5%AE%9E%E7%8E%B0%E6%93%8D%E4%BD%9C%E5%B7%B2%E6%89%93%E5%BC%80%E6%B5%8F%E8%A7%88%E5%99%A8/Image%5Cimage-20210305141558737.png" alt="image-20210305141558737"></p>
+<p>3.相关程序</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test01</span> </span>&#123;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span></pre></td></tr><tr><td class="code"><pre><span class="line">        System.setProperty(<span class="string">"webdriver.chrome.driver"</span>, <span class="string">"C:\\Program Files (x86)\\Google\\Chrome\\Application\\chromedriver.exe"</span>);</span></pre></td></tr><tr><td class="code"><pre><span class="line">        ChromeOptions options = <span class="keyword">new</span> ChromeOptions();</span></pre></td></tr><tr><td class="code"><pre><span class="line">        <span class="comment">//接管本地浏览器</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">        options.setExperimentalOption(<span class="string">"debuggerAddress"</span>, <span class="string">"127.0.0.1:9222"</span>);</span></pre></td></tr><tr><td class="code"><pre><span class="line">        WebDriver driver = <span class="keyword">new</span> ChromeDriver(options);</span></pre></td></tr><tr><td class="code"><pre><span class="line">        System.out.println(driver.getPageSource());</span></pre></td></tr><tr><td class="code"><pre><span class="line">        <span class="comment">//driver.findElement(By.linkText("确认付款")).click();</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<p>那么再去执行这个程序之后，就会自动接管我们上步操作打开的浏览器了。在此处我碰到了一问题：无论我怎么配置都是无法实现接管，之后我又在options 中设置了几个参数 ，发现根本不生效，查阅治疗之后发现，我使用的selenium 版本过低导致，所以建议尽量使用3.5以上！！</p>
+]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java基础 IO流</title>
     <url>/2020/08/15/IO/</url>
     <content><![CDATA[<h2 id="一、File类的使用"><a href="#一、File类的使用" class="headerlink" title="一、File类的使用"></a>一、File类的使用</h2><h3 id="1-如何创建File对象"><a href="#1-如何创建File对象" class="headerlink" title="1.如何创建File对象"></a>1.如何创建File对象</h3><ol>
