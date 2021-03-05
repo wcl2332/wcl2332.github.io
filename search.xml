@@ -7,10 +7,10 @@
 <h4 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h4><p>1.找到我们Chorme 安装路径</p>
 <a id="more"></a>
 
-<p><img src="/2021/03/05/2021-03-05-01/2021-03-05-01%5Cimage-20210305141211981.png" alt></p>
-<p><img src="/2021/03/05/2021-03-05-01/2021-03-05-01%5Cimage-20210305141411615.png" alt></p>
+<p><img src="/2021/03/05/2021-03-05-01/image-20210305141211981.png" alt></p>
+<p><img src="/2021/03/05/2021-03-05-01/image-20210305141411615.png" alt></p>
 <p>2.在cmd 中输入   chrome.exe –remote-debugging-port=9222   （potr 可以自由指定） ，就会自动弹出一个浏览器</p>
-<p><img src="/2021/03/05/2021-03-05-01/2021-03-05-01%5Cimage-20210305141558737.png" alt></p>
+<p><img src="/2021/03/05/2021-03-05-01/image-20210305141558737.png" alt></p>
 <p>3.相关程序</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test01</span> </span>&#123;</span></pre></td></tr><tr><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span></pre></td></tr><tr><td class="code"><pre><span class="line">        System.setProperty(<span class="string">"webdriver.chrome.driver"</span>, <span class="string">"C:\\Program Files (x86)\\Google\\Chrome\\Application\\chromedriver.exe"</span>);</span></pre></td></tr><tr><td class="code"><pre><span class="line">        ChromeOptions options = <span class="keyword">new</span> ChromeOptions();</span></pre></td></tr><tr><td class="code"><pre><span class="line">        <span class="comment">//接管本地浏览器</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">        options.setExperimentalOption(<span class="string">"debuggerAddress"</span>, <span class="string">"127.0.0.1:9222"</span>);</span></pre></td></tr><tr><td class="code"><pre><span class="line">        WebDriver driver = <span class="keyword">new</span> ChromeDriver(options);</span></pre></td></tr><tr><td class="code"><pre><span class="line">        System.out.println(driver.getPageSource());</span></pre></td></tr><tr><td class="code"><pre><span class="line">        <span class="comment">//driver.findElement(By.linkText("确认付款")).click();</span></span></pre></td></tr><tr><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
 
@@ -31,6 +31,8 @@
 </li>
 <li><p><strong>public File(String pathname)</strong></p>
 <p>以pathname为路径创建File对象，可以是绝对路径或者相对路径，如果pathname是相对路径，则默认的当前路径在系统属性user.dir中存储</p>
+<a id="more"></a>
+
 <ul>
 <li><strong>绝对路径</strong>：是一个固定的路径，从盘符开始</li>
 <li><strong>相对路径</strong>：是相对于某个位置开始</li>
@@ -44,7 +46,6 @@
 <li><p><strong>public File(File parent,String child)</strong></p>
 <p>根据一个父File对象和子文件路径创建File对象</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">File file3=<span class="keyword">new</span> File(file2,<span class="string">"345.text"</span>);</span></pre></td></tr></table></figure>
-<a id="more"></a>
 <h3 id="2-File类常用功能"><a href="#2-File类常用功能" class="headerlink" title="2.File类常用功能"></a>2.File类常用功能</h3></li>
 </ol>
 <h4 id="2-1-File类的获取功能"><a href="#2-1-File类的获取功能" class="headerlink" title="2.1 File类的获取功能"></a>2.1 File类的获取功能</h4><ul>
