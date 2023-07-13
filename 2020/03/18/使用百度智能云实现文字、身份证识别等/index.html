@@ -1,0 +1,648 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/logo.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content=" 根据公司业务需求，近期在做一个平台，其中需要对用户进行实名认证。在用户上传身份证之后自动识别身份证上的信息，然后提交相关的信息进行验证。
+​        在网上搜索后了解到了百度智能云的文字识别，详细了解一下发现还不错，不足的是身份证等识别接口每天只有500次的免费额度，如果每天量比较大的多话就需要花钱了，由于前期需求量小，暂且接入此接口。
+一、准备步骤：">
+  <meta name="author" content="王成龙">
+  <meta name="keywords" content="">
+  
+  <title>使用百度智能云实现文字、身份证识别等 - 王成龙de个人博客</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/default.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"dragonlucky.cn","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":80,"cursorChar":"","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+</head>
+
+
+<body>
+  <header style="height: 50vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>王成龙de博客</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('http://imag.dragonlucky.cn/20200307203002.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="使用百度智能云实现文字、身份证识别等">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-03-18 22:15" pubdate>
+        2020年3月18日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      904 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      12
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">使用百度智能云实现文字、身份证识别等</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2022年2月25日 上午
+                
+              </p>
+            
+            <div class="markdown-body">
+              <p> 根据公司业务需求，近期在做一个平台，其中需要对用户进行实名认证。在用户上传身份证之后自动识别身份证上的信息，然后提交相关的信息进行验证。</p>
+<p>​        在网上搜索后了解到了百度智能云的文字识别，详细了解一下发现还不错，不足的是身份证等识别接口每天只有500次的免费额度，如果每天量比较大的多话就需要花钱了，由于前期需求量小，暂且接入此接口。</p>
+<h3 id="一、准备步骤："><a href="#一、准备步骤：" class="headerlink" title="一、准备步骤："></a>一、准备步骤：<a id="more"></a></h3><ul>
+<li><p>首先需要登录<a href="https://cloud.baidu.com/" target="_blank" rel="noopener">百度智能云</a>，进入控制台，找到文字识别，点击创建应用,填写相关信息；</p>
+<p><img src="/2020/03/18/%E4%BD%BF%E7%94%A8%E7%99%BE%E5%BA%A6%E6%99%BA%E8%83%BD%E4%BA%91%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E3%80%81%E8%BA%AB%E4%BB%BD%E8%AF%81%E8%AF%86%E5%88%AB%E7%AD%89/1.png" srcset="/img/loading.gif" lazyload alt></p>
+<p><img src="/2020/03/18/%E4%BD%BF%E7%94%A8%E7%99%BE%E5%BA%A6%E6%99%BA%E8%83%BD%E4%BA%91%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E3%80%81%E8%BA%AB%E4%BB%BD%E8%AF%81%E8%AF%86%E5%88%AB%E7%AD%89/2.png" srcset="/img/loading.gif" lazyload alt></p>
+</li>
+<li><p>创建完成之后，在管理应用中可以找到我们需要的 API Key 和Secret Key </p>
+<p><img src="/2020/03/18/%E4%BD%BF%E7%94%A8%E7%99%BE%E5%BA%A6%E6%99%BA%E8%83%BD%E4%BA%91%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E3%80%81%E8%BA%AB%E4%BB%BD%E8%AF%81%E8%AF%86%E5%88%AB%E7%AD%89/3.png" srcset="/img/loading.gif" lazyload alt></p>
+</li>
+</ul>
+<h3 id="二、开发"><a href="#二、开发" class="headerlink" title="二、开发"></a>二、开发</h3><ul>
+<li><p>首先我们 需要<strong>获取access_token</strong>  </p>
+<div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.baidu.ai.aip.auth;
+
+<span class="hljs-keyword">import</span> org.json.JSONObject;
+
+<span class="hljs-keyword">import</span> java.io.BufferedReader;
+<span class="hljs-keyword">import</span> java.io.InputStreamReader;
+<span class="hljs-keyword">import</span> java.net.HttpURLConnection;
+<span class="hljs-keyword">import</span> java.net.URL;
+<span class="hljs-keyword">import</span> java.util.List;
+<span class="hljs-keyword">import</span> java.util.Map;
+
+<span class="hljs-comment">/**
+ * 获取token类
+ */</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AuthService</span> </span>&#123;
+
+    <span class="hljs-comment">/**
+     * 获取权限token
+     * <span class="hljs-doctag">@return</span> 返回示例：
+     * &#123;
+     * "access_token": "24.460da4889caad24cccdb1fea17221975.2592000.1491995545.282335-1234567",
+     * "expires_in": 2592000
+     * &#125;
+     */</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> String <span class="hljs-title">getAuth</span><span class="hljs-params">()</span> </span>&#123;
+        <span class="hljs-comment">// 官网获取的 API Key 更新为你注册的</span>
+        String clientId = <span class="hljs-string">"百度云应用的AK"</span>;
+        <span class="hljs-comment">// 官网获取的 Secret Key 更新为你注册的</span>
+        String clientSecret = <span class="hljs-string">"百度云应用的SK"</span>;
+        <span class="hljs-keyword">return</span> getAuth(clientId, clientSecret);
+    &#125;
+
+    <span class="hljs-comment">/**
+     * 获取API访问token
+     * 该token有一定的有效期，需要自行管理，当失效时需重新获取.
+     * <span class="hljs-doctag">@param</span> ak - 百度云官网获取的 API Key
+     * <span class="hljs-doctag">@param</span> sk - 百度云官网获取的 Securet Key
+     * <span class="hljs-doctag">@return</span> assess_token 示例：
+     * "24.460da4889caad24cccdb1fea17221975.2592000.1491995545.282335-1234567"
+     */</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> String <span class="hljs-title">getAuth</span><span class="hljs-params">(String ak, String sk)</span> </span>&#123;
+        <span class="hljs-comment">// 获取token地址</span>
+        String authHost = <span class="hljs-string">"https://aip.baidubce.com/oauth/2.0/token?"</span>;
+        String getAccessTokenUrl = authHost
+                <span class="hljs-comment">// 1. grant_type为固定参数</span>
+                + <span class="hljs-string">"grant_type=client_credentials"</span>
+                <span class="hljs-comment">// 2. 官网获取的 API Key</span>
+                + <span class="hljs-string">"&amp;client_id="</span> + ak
+                <span class="hljs-comment">// 3. 官网获取的 Secret Key</span>
+                + <span class="hljs-string">"&amp;client_secret="</span> + sk;
+        <span class="hljs-keyword">try</span> &#123;
+            URL realUrl = <span class="hljs-keyword">new</span> URL(getAccessTokenUrl);
+            <span class="hljs-comment">// 打开和URL之间的连接</span>
+            HttpURLConnection connection = (HttpURLConnection) realUrl.openConnection();
+            connection.setRequestMethod(<span class="hljs-string">"GET"</span>);
+            connection.connect();
+            <span class="hljs-comment">// 获取所有响应头字段</span>
+            Map&lt;String, List&lt;String&gt;&gt; map = connection.getHeaderFields();
+            <span class="hljs-comment">// 遍历所有的响应头字段</span>
+            <span class="hljs-keyword">for</span> (String key : map.keySet()) &#123;
+                System.err.println(key + <span class="hljs-string">"---&gt;"</span> + map.get(key));
+            &#125;
+            <span class="hljs-comment">// 定义 BufferedReader输入流来读取URL的响应</span>
+            BufferedReader in = <span class="hljs-keyword">new</span> BufferedReader(<span class="hljs-keyword">new</span> InputStreamReader(connection.getInputStream()));
+            String result = <span class="hljs-string">""</span>;
+            String line;
+            <span class="hljs-keyword">while</span> ((line = in.readLine()) != <span class="hljs-keyword">null</span>) &#123;
+                result += line;
+            &#125;
+            <span class="hljs-comment">/**
+             * 返回结果示例
+             */</span>
+            System.err.println(<span class="hljs-string">"result:"</span> + result);
+            JSONObject jsonObject = <span class="hljs-keyword">new</span> JSONObject(result);
+            String access_token = jsonObject.getString(<span class="hljs-string">"access_token"</span>);
+            <span class="hljs-keyword">return</span> access_token;
+        &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;
+            System.err.printf(<span class="hljs-string">"获取token失败！"</span>);
+            e.printStackTrace(System.err);
+        &#125;
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+    &#125;
+
+&#125;</code></pre></div>
+
+<ul>
+<li>获取token 之后就可以进行下一步操作了，进行身份证的识别</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2020/03/18/%E4%BD%BF%E7%94%A8%E7%99%BE%E5%BA%A6%E6%99%BA%E8%83%BD%E4%BA%91%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E3%80%81%E8%BA%AB%E4%BB%BD%E8%AF%81%E8%AF%86%E5%88%AB%E7%AD%89/4.png" srcset="/img/loading.gif" lazyload alt></p>
+<p><img src="/2020/03/18/%E4%BD%BF%E7%94%A8%E7%99%BE%E5%BA%A6%E6%99%BA%E8%83%BD%E4%BA%91%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E3%80%81%E8%BA%AB%E4%BB%BD%E8%AF%81%E8%AF%86%E5%88%AB%E7%AD%89/5.png" srcset="/img/loading.gif" lazyload alt></p>
+<p>代码示例:</p>
+<div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.baidu.ai.aip;
+
+<span class="hljs-keyword">import</span> com.baidu.ai.aip.utils.Base64Util;
+<span class="hljs-keyword">import</span> com.baidu.ai.aip.utils.FileUtil;
+<span class="hljs-keyword">import</span> com.baidu.ai.aip.utils.HttpUtil;
+
+<span class="hljs-keyword">import</span> java.net.URLEncoder;
+
+<span class="hljs-comment">/**
+* 身份证识别
+*/</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Idcard</span> </span>&#123;
+
+    <span class="hljs-comment">/**
+    * 重要提示代码中所需工具类
+    * FileUtil,Base64Util,HttpUtil,GsonUtils请从
+    * https://ai.baidu.com/file/658A35ABAB2D404FBF903F64D47C1F72
+    * https://ai.baidu.com/file/C8D81F3301E24D2892968F09AE1AD6E2
+    * https://ai.baidu.com/file/544D677F5D4E4F17B4122FBD60DB82B3
+    * https://ai.baidu.com/file/470B3ACCA3FE43788B5A963BF0B625F3
+    * 下载
+    */</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> String <span class="hljs-title">idcard</span><span class="hljs-params">()</span> </span>&#123;
+        <span class="hljs-comment">// 请求url</span>
+        String url = <span class="hljs-string">"https://aip.baidubce.com/rest/2.0/ocr/v1/idcard"</span>;
+        <span class="hljs-keyword">try</span> &#123;
+            <span class="hljs-comment">// 本地文件路径</span>
+            String filePath = <span class="hljs-string">"[本地文件路径]"</span>;
+            <span class="hljs-keyword">byte</span>[] imgData = FileUtil.readFileByBytes(filePath);
+            String imgStr = Base64Util.encode(imgData);
+            String imgParam = URLEncoder.encode(imgStr, <span class="hljs-string">"UTF-8"</span>);
+
+            String param = <span class="hljs-string">"id_card_side="</span> + <span class="hljs-string">"front"</span> + <span class="hljs-string">"&amp;image="</span> + imgParam;
+
+            <span class="hljs-comment">// 注意这里仅为了简化编码每一次请求都去获取access_token，线上环境access_token有过期时间， 客户端可自行缓存，过期后重新获取。</span>
+            String accessToken = <span class="hljs-string">"[调用鉴权接口获取的token]"</span>;
+
+            String result = HttpUtil.post(url, accessToken, param);
+            System.out.println(result);
+            <span class="hljs-keyword">return</span> result;
+        &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;
+            e.printStackTrace();
+        &#125;
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;
+        Idcard.idcard();
+    &#125;
+&#125;</code></pre></div>
+
+<p>注意： </p>
+<ol>
+<li>图像数据，base64编码后进行urlencode ；</li>
+<li>有的base64编码后有头部“Base64：”要去掉</li>
+</ol>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Java/">Java</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Java/">Java</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/08/04/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Java基础 集合框架</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/03/09/%E8%A7%A3%E5%86%B3%E5%B0%8F%E7%A8%8B%E5%BA%8F%20app.js%E4%B8%AD%E7%9A%84onLaunch%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%20%E5%9C%A8page%E7%9A%84onLoade%E4%B8%AD%E6%8E%A5%E6%94%B6%E4%B8%8D%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/">
+                        <span class="hidden-mobile">解决小程序 app.js中的onLaunch中的数据 在page的onLoade中接收不到的问题</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+    
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+  <!-- 备案信息 -->
+  <div class="beian">
+    <span>
+      <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+        浙ICP备19050089号
+      </a>
+    </span>
+    
+  </div>
+
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"live2d-widget-model-wanko"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>
